@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe FavoriteQuestion, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+	before { @favorite_question = FactoryGirl.build(:favorite_question)}
+	subject {@favorite_question}
+
+	it { should respond_to(:question_id) }
+	it { should respond_to(:user_id)}
 end

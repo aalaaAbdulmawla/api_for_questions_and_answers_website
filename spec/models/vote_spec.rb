@@ -1,5 +1,11 @@
 require 'spec_helper'
 
 describe Vote do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before { @vote = FactoryGirl.build(:vote) }
+  subject { @vote}
+
+  it { should respond_to(:up_flag) }
+  it { should respond_to(:user_id) }
+  it { should respond_to(:votable_type) }
+  it { should respond_to(:votable_id) }
 end
