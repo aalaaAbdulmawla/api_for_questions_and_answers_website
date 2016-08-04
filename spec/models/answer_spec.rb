@@ -8,4 +8,26 @@ describe Answer do
   it { should respond_to(:user_id) }
   it { should respond_to(:question_id) }
   it { should respond_to(:accepted_flag) }
+
+  describe "when answer's body is not present" do
+  	before { @answer.body = " "}
+  	it { should_not be_valid}
+  end
+
+  describe "when user_id is not present" do
+  	before { @answer.user_id = nil }
+  	it { should_not be_valid}
+  end
+
+  describe "when question_id is not present" do
+  	before { @answer.question_id = nil }
+  	it { should_not be_valid}
+  end
+
+  describe "when body is too large" do
+    before { @answer.body  = "some answer" * 3000 }
+    it { should_not be_valid }
+  end
+
+
 end
