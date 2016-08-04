@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801133437) do
+ActiveRecord::Schema.define(version: 20160804000659) do
 
   create_table "answers", force: :cascade do |t|
     t.text     "body"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160801133437) do
   create_table "comments", force: :cascade do |t|
     t.string   "body"
     t.integer  "user_id"
-    t.integer  "commentable_type"
+    t.string   "commentable_type"
     t.integer  "commentable_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 20160801133437) do
 
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "favorite_questions", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "favorite_questions", ["question_id", "user_id"], name: "index_favorite_questions_on_question_id_and_user_id"
 
   create_table "questions", force: :cascade do |t|
     t.string   "title"
@@ -97,12 +106,13 @@ ActiveRecord::Schema.define(version: 20160801133437) do
   create_table "votes", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "votable_id"
-    t.integer  "votable_type"
+    t.string   "votable_type"
     t.boolean  "up_flag"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
+  add_index "votes", ["user_id", "votable_type", "votable_id"], name: "my_votes_index"
   add_index "votes", ["user_id"], name: "index_votes_on_user_id"
   add_index "votes", ["votable_id"], name: "index_votes_on_votable_id"
 
