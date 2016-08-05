@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:show, :create, :update]
+  skip_before_filter :authenticate_user!, :only => [:show, :create, :update, :destroy]
 	respond_to :json
 
 	def show
@@ -23,6 +23,12 @@ class Api::V1::UsersController < ApplicationController
 	  else
 	    render json: { errors: user.errors }, status: 422
 	  end
+	end
+
+	def destroy
+	  user = User.find(params[:id])
+	  user.destroy
+	  head 204
 	end
 
 	private
