@@ -5,7 +5,7 @@ FactoryGirl.define do
   	password_confirmation "12345678"
     first_name "MyString"
     last_name "MyString"
-    birth_date "2016-08-01"
+    birth_date "2000-08-01"
     location "MyString"
     job "MyString"
     about "MyText"
