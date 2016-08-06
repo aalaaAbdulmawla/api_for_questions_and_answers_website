@@ -32,6 +32,12 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   ##34an el helpers
   config.include Request::JsonHelpers, :type => :controller
+
+  config.include Devise::Test::ControllerHelpers, type: :controller  #mohem
+  config.include Request::JsonHelpers, :type => :controller
+  # config.include Request::HeadersHelpers, :type => :controller
+  config.include Devise::Test::ControllerHelpers
+  
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
