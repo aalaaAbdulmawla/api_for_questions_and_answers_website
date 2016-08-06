@@ -16,11 +16,24 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, length: { maximum: 30}
   validates :location, :job, length: { maximum: 65}
   validates :about, length: { maximum: 500}
+  validates :auth_token, uniqueness: true
 
   validates_format_of :birth_date, :with => /\d{4}\-\d{2}\-\d{2}/, 
   :message => "Birth date must be in the following format: yyyy/mm/dd"
 
   validate :age_must_be_greater_than_ten
+
+  ##Callbacks
+  before_create :generate_authentication_token!
+
+
+
+  ##Class methods
+  def generate_authentication_token!
+    begin
+      self.auth_token = Devise.friendly_token
+    end while self.class.exists?(auth_token: auth_token)
+  end
 
   def age_must_be_greater_than_ten
     if birth_date.present? && birth_date + 10 >= Date.today
@@ -29,3 +42,31 @@ class User < ActiveRecord::Base
   end    
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
