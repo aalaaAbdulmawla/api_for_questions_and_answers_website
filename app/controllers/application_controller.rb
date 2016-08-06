@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
  # before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  include Authenticable
+  
   def configure_permitted_parameters
   	devise_parameter_sanitizer.permit(:sign_up, :account_update) do |user_params|
     	user_params.permit(:first_name, :last_name, :email, :password, 
