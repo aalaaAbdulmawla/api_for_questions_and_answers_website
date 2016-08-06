@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:show, :create, :update, :destroy]
+  # skip_before_filter :authenticate_user!, :only => [:show, :create, :update, :destroy]
 	respond_to :json
 
 	def show
