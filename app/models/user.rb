@@ -18,8 +18,10 @@ class User < ActiveRecord::Base
   validates :about, length: { maximum: 500}
   validates :auth_token, uniqueness: true
 
-  validates_format_of :birth_date, :with => /\d{4}\-\d{2}\-\d{2}/, 
-  :message => "Birth date must be in the following format: yyyy/mm/dd"
+  validates_format_of :birth_date, 
+   :with=> /\d{4}\-\d{2}\-\d{2}/, 
+   :message => "Birth date must be in the following format: yyyy/mm/dd",
+   :if => lambda{ |object| object.birth_date.present? }
 
   validate :age_must_be_greater_than_ten
 
