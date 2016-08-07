@@ -31,7 +31,39 @@ describe Authenticable, :type => :controller do
     it "render a json error message" do
       expect(json_response[:errors]).to eql "Not authenticated"
     end
+  end
 
-   # it { should respond_with 401 } 
+  describe "#user_signed_in?" do
+
+    context "when there is a user on 'session'" do
+      before do
+        @user = FactoryGirl.create :user
+        #authentication.stub(:current_user).and_return(@user)
+        allow(authentication).to receive_messages(current_user: @user)
+      end
+      it "user should be signed in" do
+         expect(authentication.user_signed_in?).to eql true
+      end
+    end
+
+    context "when there is no user on 'session'" do
+      before do
+        @user = FactoryGirl.create :user
+        #authentication.stub(:current_user).and_return(nil)
+        allow(authentication).to receive_messages(:current_user => nil)
+      end
+      it "user should not be signed in" do
+         expect(authentication.user_signed_in?).to eql false
+      end
+    end
   end
 end
+
+
+
+
+
+
+
+
+
