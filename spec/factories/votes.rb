@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :vote do
-    user_id 1
+    user
     votable_id 1
     votable_type "some_model"
     up_flag false

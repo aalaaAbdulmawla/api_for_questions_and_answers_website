@@ -4,8 +4,8 @@ RSpec.describe FavoriteQuestion, type: :model do
 	before { @favorite_question = FactoryGirl.build(:favorite_question)}
 	subject {@favorite_question}
 
-	it { should respond_to(:question_id) }
-	it { should respond_to(:user_id)}
+	it { should belong_to(:question) }
+	it { should belong_to(:user)}
 
 	describe "when user_id is not present" do
 		before { @favorite_question.user_id = nil }

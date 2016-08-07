@@ -5,7 +5,7 @@ describe Vote do
   subject { @vote}
 
   it { should respond_to(:up_flag) }
-  it { should respond_to(:user_id) }
+  it { should belong_to(:user) }
   it { should respond_to(:votable_type) }
   it { should respond_to(:votable_id) }
 

@@ -5,9 +5,11 @@ describe Answer do
   subject { @answer }
 
   it { should respond_to(:body) }
-  it { should respond_to(:user_id) }
-  it { should respond_to(:question_id) }
   it { should respond_to(:accepted_flag) }
+  it { should belong_to(:user)}
+  it { should belong_to(:question)}
+  it { should have_many(:comments) }
+  it { should have_many(:votes) }
 
   describe "when answer's body is not present" do
   	before { @answer.body = " "}

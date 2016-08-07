@@ -7,7 +7,12 @@ describe Question do
 
   it { should respond_to(:title) }
   it { should respond_to(:body) }
-  it { should respond_to(:user_id) }
+  it { should belong_to(:user) }
+  it { should have_many(:answers) }
+  it { should have_many(:comments) }
+  it { should have_many(:votes) }
+  it { should have_many(:favorited_by)}
+
 
   describe "when title is not present" do
   	before { @question.title = " "}

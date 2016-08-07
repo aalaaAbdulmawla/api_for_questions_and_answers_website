@@ -6,7 +6,7 @@ describe Comment do
 
   ##Testing columns exists
   it { should respond_to(:body) }
-  it { should respond_to(:user_id) }
+  it { should belong_to(:user) }
   it { should respond_to(:commentable_type) }
   it { should respond_to(:commentable_id) }
 
