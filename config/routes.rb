@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       scope module: :v1 do
       	resources :users, only: [:show, :create, :update, :destroy, :index]
       	resources :sessions, :only => [:create, :destroy]
+      	resources :questions, :only => [:index, :show]
       end
   end
 

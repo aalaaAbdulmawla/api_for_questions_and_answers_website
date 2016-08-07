@@ -103,6 +103,7 @@ describe User do
     end
   end
 
+
   ##Test class methods
   describe "#generate_authentication_token!" do
     it "generates a unique token" do
