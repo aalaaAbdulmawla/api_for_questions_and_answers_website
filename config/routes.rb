@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       		resources :answers, :only => [:create]
       	end
 
-      	resources :answers, :only => [:show]
+      	resources :answers, :only => [:show, :update]
       end 
   end
 
