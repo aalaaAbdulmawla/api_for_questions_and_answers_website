@@ -4,11 +4,14 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
       scope module: :v1 do
       	resources :users, only: [:show, :create, :update, :destroy, :index] do
-      		    resources :questions, :only => [:create, :update, :destroy]
+      		resources :questions, :only => [:create, :update, :destroy]
       	end
       	resources :sessions, :only => [:create, :destroy]
-      	resources :questions, :only => [:index, :show]
-      end
+      	resources :questions, :only => [:index, :show] do
+      		put :favorite, on: :member
+      		delete :unfavorite, on: :member
+      	end
+      end 
   end
 
 end
