@@ -5,7 +5,7 @@ class Api::V1::AnswersController < ApplicationController
 	def create
 		answer = (Question.find(params[:question_id])).answers.build(answer_params)
 		if answer.save
-			current_user.answers << answer
+			#current_user.answers << answer
       render json: answer, status: 201, location: [:api, answer]
     else
       render json: { errors: answer.errors }, status: 422
@@ -29,6 +29,6 @@ class Api::V1::AnswersController < ApplicationController
 	private
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body).merge(user_id: current_user.id)
   end
 end

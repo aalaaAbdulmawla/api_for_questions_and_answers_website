@@ -11,9 +11,14 @@ Rails.application.routes.draw do
       		put :favorite, on: :member
       		delete :unfavorite, on: :member
       		resources :answers, :only => [:create]
+      		resources :comments, :only => [:create]
       	end
 
-      	resources :answers, :only => [:show, :update]
+      	resources :answers, :only => [:show, :update] do
+      		resources :comments, :only => [:create]
+      	end
+
+      	resources :comments, :only => [:show]
       end 
   end
 
