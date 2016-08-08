@@ -10,7 +10,10 @@ Rails.application.routes.draw do
       	resources :questions, :only => [:index, :show] do
       		put :favorite, on: :member
       		delete :unfavorite, on: :member
+      		resources :answers, :only => [:create]
       	end
+
+      	resources :answers, :only => [:show]
       end 
   end
 

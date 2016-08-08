@@ -6,6 +6,6 @@ class Answer < ActiveRecord::Base
 	has_many :votes, as: :votable
 
 	#Validations
-	validates :body, :user_id, :question_id, presence: :true
+	validates :body, presence: :true
 	validates :body, length: { maximum: 1000 }
 end
