@@ -132,20 +132,20 @@ describe User do
   end
 
   describe "birth_date is invalid" do
-    # context "when birth_date is invalid string" do
-    #   before { @user.birth_date = "a bad string"}
-    #   it { should_not be_valid }
-    # end
+    context "when birth_date is invalid string" do
+      before { @user.birth_date = "a bad string"}
+      it { should_not be_valid }
+    end
 
-    # context "when birth_date is wrong formated date" do
-    #   before { @user.birth_date = "02-31-2016"}
-    #   expect(@user.valid?).to eql false
-    # end
+    context "when birth_date is wrong formated date" do
+      before { @user.birth_date = "02-31-2016"}
+      it { should_not be_valid }
+    end
 
-    # context "when birth_date is less than ten" do
-    #   before { @user.birth_date = Date.today }
-    #   expect(@user.valid?).to eql false
-    # end
+    context "when birth_date is less than ten" do
+      before { @user.birth_date = Date.today }
+      it { should_not be_valid }
+    end
   end
 
   describe "when birth_date is valid" do

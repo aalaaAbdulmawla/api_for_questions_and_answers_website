@@ -62,4 +62,4 @@ end
 #Api gems
 gem 'active_model_serializers'
 gem 'devise'
-
+gem 'date_validator'

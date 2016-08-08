@@ -18,16 +18,12 @@ class User < ActiveRecord::Base
   validates :about, length: { maximum: 500}
   validates :auth_token, uniqueness: true
   
-  validates :birth_date, format: {:with=> /\d{4}\-\d{2}\-\d{2}/, 
-     :message => "Birth date must be in the following format: yyyy/mm/dd"}, allow_blank: true
-  
+  validates :birth_date, date: { before: Proc.new { Time.now - 10.year } }, allow_blank: true
 
   validate :age_must_be_greater_than_ten
 
   ##Callbacks
   before_create :generate_authentication_token!
-
-
 
   ##Class methods
   def generate_authentication_token!
