@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809123729) do
+ActiveRecord::Schema.define(version: 20160809235207) do
 
   create_table "answers", force: :cascade do |t|
     t.text     "body"
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 20160809123729) do
     t.string   "location"
     t.string   "job"
     t.text     "about"
-    t.integer  "experience"
+    t.integer  "experience",             default: 1
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "email",                  default: "", null: false
