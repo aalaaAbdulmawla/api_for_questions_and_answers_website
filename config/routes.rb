@@ -12,13 +12,24 @@ Rails.application.routes.draw do
       		delete :unfavorite, on: :member
       		resources :answers, :only => [:create]
       		resources :comments, :only => [:create]
+          put  :vote_up, on: :member, controller: :votes, question_id: true
+          put  :vote_down, on: :member, controller: :votes, question_id: true
+          put  :remove_vote, on: :member, controller: :votes, question_id: true
       	end
 
       	resources :answers, :only => [:show, :update] do
       		resources :comments, :only => [:create]
+          put  :vote_up, on: :member, controller: :votes, answer_id: true
+          put  :vote_down, on: :member, controller: :votes, answer_id: true
+          put  :remove_vote, on: :member, controller: :votes, answer_id: true
       	end
 
-      	resources :comments, :only => [:show]
+      	resources :comments, :only => [:show] do
+          put :vote_up, on: :member, controller: :votes, comment_id: true
+          put :vote_down, on: :member, controller: :votes, comment_id: true
+          put :remove_vote, on: :member, controller: :votes, comment_id: true
+        end
+        resources :votes, :only => [:show]
       end 
   end
 
