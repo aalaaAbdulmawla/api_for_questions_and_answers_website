@@ -15,6 +15,7 @@ Rails.application.routes.draw do
           put  :vote_up, on: :member, controller: :votes, question_id: true
           put  :vote_down, on: :member, controller: :votes, question_id: true
           put  :remove_vote, on: :member, controller: :votes, question_id: true
+          resources :edit_suggestions, only: [:create]
       	end
 
       	resources :answers, :only => [:show, :update] do
@@ -31,6 +32,9 @@ Rails.application.routes.draw do
           put :remove_vote, on: :member, controller: :votes, comment_id: true
         end
         resources :votes, :only => [:show]
+        resources :edit_suggestions, :only => [:show, :index] do
+          put :approve_edit, on: :member
+        end
       end 
   end
 

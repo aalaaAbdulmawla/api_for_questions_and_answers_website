@@ -7,6 +7,7 @@ class Question < ActiveRecord::Base
   has_many :favorited_by, through: :favorite_questions, source: :user
   has_many :comments, as: :commentable, dependent: :destroy
 	has_many :votes, as: :votable, dependent: :destroy
+	has_many :edit_suggestions, dependent: :destroy
 
 	##Validations
 	validates :body, :title, :user_id, presence: true
