@@ -22,6 +22,7 @@ Rails.application.routes.draw do
           put  :vote_up, on: :member, controller: :votes, answer_id: true
           put  :vote_down, on: :member, controller: :votes, answer_id: true
           put  :remove_vote, on: :member, controller: :votes, answer_id: true
+          put :verify_answer, on: :member
       	end
 
       	resources :comments, :only => [:show] do

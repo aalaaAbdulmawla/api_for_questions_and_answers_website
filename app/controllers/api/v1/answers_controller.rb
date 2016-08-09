@@ -1,5 +1,5 @@
 class Api::V1::AnswersController < ApplicationController
-	before_action :authenticate_with_token!, only: [:create, :edit]
+	before_action :authenticate_with_token!, only: [:create, :update, :verify_answer]
   respond_to :json
 
 	def create
@@ -24,6 +24,19 @@ class Api::V1::AnswersController < ApplicationController
 	def show
 		respond_with Answer.find(params[:id])
 	end
+
+  def verify_answer
+    answer = Answer.find(params[:id])
+    question = current_user.questions.find(answer.question_id)
+    question.answers.where(:accepted_flag => true).update_all(accepted_flag: false)
+    if answer.accepted_flag == true
+      render json: { body: "You verified this answer before." }, status: 422
+    elsif answer.update(accepted_flag: true)
+      render json: answer, status: 200, location: [:api, answer]
+    else
+      render json: { errors: answer.errors }, status: 422
+    end
+  end
 
 
 	private
