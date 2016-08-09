@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160806220415) do
+ActiveRecord::Schema.define(version: 20160809123729) do
 
   create_table "answers", force: :cascade do |t|
     t.text     "body"
     t.integer  "user_id"
     t.integer  "question_id"
-    t.boolean  "accepted_flag"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.boolean  "accepted_flag", default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id"
@@ -36,6 +36,18 @@ ActiveRecord::Schema.define(version: 20160806220415) do
 
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "edit_suggestions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.string   "title"
+    t.text     "body"
+    t.boolean  "accepted_flag", default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "edit_suggestions", ["user_id", "question_id"], name: "index_edit_suggestions_on_user_id_and_question_id"
 
   create_table "favorite_questions", force: :cascade do |t|
     t.integer  "question_id"
