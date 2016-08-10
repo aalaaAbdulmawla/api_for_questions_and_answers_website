@@ -1,5 +1,5 @@
 class Api::V1::TagsController < ApplicationController
-	before_action :authenticate_with_token!, only: [:create]
+	before_action :authenticate_with_token!, only: [:create, :destroy]
 	before_filter :set_tag, only: [:create]
 	respond_to :json
 

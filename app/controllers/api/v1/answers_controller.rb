@@ -28,10 +28,20 @@ class Api::V1::AnswersController < ApplicationController
   def verify_answer
     answer = Answer.find(params[:id])
     question = current_user.questions.find(answer.question_id)
-    question.answers.where(:accepted_flag => true).update_all(accepted_flag: false)
+    if question.answers.where(:accepted_flag => true).count == 0
+      user = User.find(question.user_id)
+      user.update(experience: user.experience + 2)
+    end
+    question.answers.where(:accepted_flag => true).each do |ans|
+      ans.update(accepted_flag: false)
+      user = User.find(ans.user_id)
+      user.update(experience: user.experience - 10)
+    end
     if answer.accepted_flag == true
       render json: { body: "You verified this answer before." }, status: 422
     elsif answer.update(accepted_flag: true)
+      user = User.find(ans.user_id)
+      user.update(experience: user.experience + 10)    
       render json: answer, status: 200, location: [:api, answer]
     else
       render json: { errors: answer.errors }, status: 422
@@ -45,3 +55,15 @@ class Api::V1::AnswersController < ApplicationController
     params.require(:answer).permit(:body).merge(user_id: current_user.id)
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+

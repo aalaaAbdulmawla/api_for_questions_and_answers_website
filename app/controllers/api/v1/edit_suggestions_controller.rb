@@ -1,5 +1,7 @@
 class Api::V1::EditSuggestionsController < ApplicationController
 	before_action :authenticate_with_token!, only: [:create, :index, :approve_edit]
+	before_action :check_experience, only: [:create]
+	after_action :award_experience, only: [:approve_edit]
 	respond_to :json
 
 	def create
@@ -38,4 +40,21 @@ class Api::V1::EditSuggestionsController < ApplicationController
 		params.require(:edit_suggestion).permit(:title, :body).merge(user_id: current_user.id, 
 																													question_id: params[:question_id])
 	end
+
+	def check_experience
+  	unless current_user.experience >= 15
+  	render json: { body:  "You can't suggest edits unless your experience is above 15 } for this." }, 
+  						status: 422
+  end
+
+  def award_experience
+  	edit = EditSuggestion.find(params[:id])
+  	user = User.find(edit.user_id)
+  	user.update(experience: user.experience + 2 )
+  end
+
+
 end
+
+
+

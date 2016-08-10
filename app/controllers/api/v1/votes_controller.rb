@@ -1,5 +1,7 @@
 class Api::V1::VotesController < ApplicationController
-	before_action :authenticate_with_token!, only: [:vote_up, :vote_down]
+	before_action :authenticate_with_token!, only: [:vote_up, :vote_down, :remove_vote]
+	before_action :check_experience, only: [:vote_up, :vote_down]
+	after_action :award_experience, only: [:vote_up, :vote_down]
 	before_filter -> { check_if_already_voted true }, only: [:vote_up]
 	before_filter -> { check_if_already_voted false }, only: [:vote_down]
 
@@ -27,6 +29,8 @@ class Api::V1::VotesController < ApplicationController
 	def remove_vote
 		vote = parent.votes.find_by_user_id(current_user.id)
 		if ! vote.nil?
+			user = User.find(parent.user_id)
+			vote.up_flag ? user.update(experience: user.experience - 5) : user.update(experience: user.experience + 5) 
 			vote.destroy
 			head 404
 		else
@@ -60,6 +64,17 @@ class Api::V1::VotesController < ApplicationController
   						status: 422
   		end
   	end
+  end
+
+  def check_experience
+  	unless current_user.experience >= 15
+  	render json: { body:  "You can't vote unless your experience is above 15 } for this." }, 
+  						status: 422
+  end
+
+  def award_experience
+		user = User.find(parent.user_id)
+		vote.up_flag ? user.update(experience: user.experience + 5) : user.update(experience: user.experience - 5) 
   end
 
 
