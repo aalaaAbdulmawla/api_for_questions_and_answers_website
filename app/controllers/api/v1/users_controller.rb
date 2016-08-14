@@ -1,9 +1,9 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_with_token!, only: [:update, :destroy]
+  before_action :authenticate_with_token!, only: [:update, :destroy, :my_tags]
 	respond_to :json
 
 	def index
-		respond_with User.all
+		respond_with(User.all.page(params[:page]).per(6))
 	end
 
 	def show
@@ -36,37 +36,41 @@ class Api::V1::UsersController < ApplicationController
 
 	def questions
 		user = User.find(params[:id])
-		respond_with user.questions
+		respond_with(user.questions.page(params[:page]).per(6))
 	end
 
 	def answers
 		user = User.find(params[:id])
-		respond_with user.answers
+		respond_with(user.answers.page(params[:page]).per(6))
 	end
 
 	def comments
 		user = User.find(params[:id])
-		respond_with user.comments
+		respond_with(user.comments.page(params[:page]).per(6))
 	end
 
 	def favorites
 		user = User.find(params[:id])
-		respond_with user.favorites
+		respond_with(user.favorites.page(params[:page]).per(6))
 	end
 
 	def newest_questions
 		user = User.find(params[:id])
-		respond_with user.questions.order(created_at: :desc)
+		respond_with(user.questions.order(created_at: :desc).page(params[:page]).per(6))
 	end
 
 	def newest_answers
 		user = User.find(params[:id])
-		respond_with user.answers.order(created_at: :desc)
+		respond_with(user.answers.order(created_at: :desc).page(params[:page]).per(6))
 	end
 
 	def newest_votes
 		user = User.find(params[:id])
-		respond_with user.votes.order(created_at: :desc)
+		respond_with(user.votes.order(created_at: :desc).page(params[:page]).per(6))
+	end
+
+	def tags
+		respond_with(User.tags(current_user))	
 	end
 
 	private

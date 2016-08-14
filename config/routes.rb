@@ -9,10 +9,10 @@ Rails.application.routes.draw do
           get :answers, on: :member
           get :comments, on: :member
           get :favorites, on: :member
-
           get :newest_questions, on: :member
           get :newest_answers, on: :member
           get :newest_votes, on: :member
+          get :tags, on: :member
       	end
       	resources :sessions, :only => [:create, :destroy]
       	resources :questions, :only => [:index, :show] do
@@ -30,6 +30,13 @@ Rails.application.routes.draw do
           get :no_answers, on: :collection
           get :no_answers_votes, on: :collection
           get :newest_no_answers, on: :collection
+          get :votes, on: :member
+          get :newest_questions, on: :collection
+          get :under_tag, on: :collection
+          get :unanswered, on: :collection
+          get :newest_unanswered, on: :collection
+          get :unanswered_votes, on: :collection
+          get :active, on: :collection
           # delete :destroy, controller: :tags, param: :name
       	end
 

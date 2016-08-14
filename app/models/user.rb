@@ -42,6 +42,14 @@ class User < ActiveRecord::Base
     end
   end    
 
+  def self.tags(user)
+    ans = []
+    user.questions.each do |question|
+      question.tags.each {|tag| ans << tag}
+    end
+    return ans
+  end
+
   private
   def age
     now = Time.now.utc.to_date

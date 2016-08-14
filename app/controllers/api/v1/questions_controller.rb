@@ -51,17 +51,46 @@ class Api::V1::QuestionsController < ApplicationController
   end
 
   def no_answers
-    respond_with Question.no_answers
+    respond_with(Question.no_answers)
   end
 
   def no_answers_votes
-    respond_with Question.no_answers_votes
+    respond_with(Question.no_answers_votes)
   end
 
   def newest_no_answers
-    respond_with Question.newest_no_answers
+    respond_with(Question.newest_no_answers)
   end
   
+  def votes
+    question = Question.find(params[:id])
+    respond_with(question.votes.page(params[:page]).per(6))
+  end
+
+  def newest_questions
+    respond_with(Question.all.order(created_at: :desc).page(params[:page]).per(6))
+  end
+
+  def under_tag
+    tag = params[:name]
+    respond_with(Question.under_tag(tag).page(params[:page]).per(6))
+  end
+
+  def unanswered
+    respond_with(Question.unanswered)
+  end
+
+  def newest_unanswered
+    respond_with(Question.newest_unanswered)
+  end
+
+  def unanswered_votes
+    respond_with(Question.unanswered_votes)
+  end
+
+  def active
+    respond_with(Question.active)
+  end  
 
   private
 
