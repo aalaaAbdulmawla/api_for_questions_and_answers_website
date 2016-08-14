@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       	resources :sessions, :only => [:create, :destroy]
       	resources :questions, :only => [:index, :show] do
       		put :favorite, on: :member
-          resources :featured_questions, only: => [:create]
+          resources :featured_questions, :only => [:create]
       		delete :unfavorite, on: :member
       		resources :answers, :only => [:create]
       		resources :comments, :only => [:create]
