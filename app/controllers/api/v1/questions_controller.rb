@@ -49,6 +49,18 @@ class Api::V1::QuestionsController < ApplicationController
   	current_user.favorites.delete(question)
     head 204
   end
+
+  def no_answers
+    respond_with Question.no_answers
+  end
+
+  def no_answers_votes
+    respond_with Question.no_answers_votes
+  end
+
+  def newest_no_answers
+    respond_with Question.newest_no_answers
+  end
   
 
   private

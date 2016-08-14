@@ -19,6 +19,9 @@ Rails.application.routes.draw do
           resources :edit_suggestions, only: [:create]
           resources :tags, only: [:create, :destroy]
           get :question_tags, on: :member, controller: :tags
+          get :no_answers, on: :collection
+          get :no_answers_votes, on: :collection
+          get :newest_no_answers, on: :collection
           # delete :destroy, controller: :tags, param: :name
       	end
 
