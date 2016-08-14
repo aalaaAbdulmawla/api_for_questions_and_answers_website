@@ -5,6 +5,14 @@ Rails.application.routes.draw do
       scope module: :v1 do
       	resources :users, only: [:show, :create, :update, :destroy, :index] do
       		resources :questions, :only => [:create, :update, :destroy]
+          get :questions, on: :member
+          get :answers, on: :member
+          get :comments, on: :member
+          get :favorites, on: :member
+
+          get :newest_questions, on: :member
+          get :newest_answers, on: :member
+          get :newest_votes, on: :member
       	end
       	resources :sessions, :only => [:create, :destroy]
       	resources :questions, :only => [:index, :show] do

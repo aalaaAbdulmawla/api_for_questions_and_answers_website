@@ -34,6 +34,41 @@ class Api::V1::UsersController < ApplicationController
 	  head 204
 	end
 
+	def questions
+		user = User.find(params[:id])
+		respond_with user.questions
+	end
+
+	def answers
+		user = User.find(params[:id])
+		respond_with user.answers
+	end
+
+	def comments
+		user = User.find(params[:id])
+		respond_with user.comments
+	end
+
+	def favorites
+		user = User.find(params[:id])
+		respond_with user.favorites
+	end
+
+	def newest_questions
+		user = User.find(params[:id])
+		respond_with user.questions.order(created_at: :desc)
+	end
+
+	def newest_answers
+		user = User.find(params[:id])
+		respond_with user.answers.order(created_at: :desc)
+	end
+
+	def newest_votes
+		user = User.find(params[:id])
+		respond_with user.votes.order(created_at: :desc)
+	end
+
 	private
 	def user_params
 		params.require(:user).permit(:email, :password, :password_confiramtion, :first_name,
