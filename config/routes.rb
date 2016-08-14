@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       	resources :sessions, :only => [:create, :destroy]
       	resources :questions, :only => [:index, :show] do
       		put :favorite, on: :member
+          resources :featured_questions, only: => [:create]
       		delete :unfavorite, on: :member
       		resources :answers, :only => [:create]
       		resources :comments, :only => [:create]
@@ -35,6 +36,7 @@ Rails.application.routes.draw do
           put :remove_vote, on: :member, controller: :votes, comment_id: true
         end
         resources :votes, :only => [:show]
+        resources :featured_questions, only: :show
         resources :edit_suggestions, :only => [:show, :index] do
           put :approve_edit, on: :member
         end

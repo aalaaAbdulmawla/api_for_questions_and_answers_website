@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809235207) do
+ActiveRecord::Schema.define(version: 20160811100602) do
 
   create_table "answers", force: :cascade do |t|
     t.text     "body"
@@ -57,6 +57,17 @@ ActiveRecord::Schema.define(version: 20160809235207) do
   end
 
   add_index "favorite_questions", ["question_id", "user_id"], name: "index_favorite_questions_on_question_id_and_user_id"
+
+  create_table "featured_questions", id: false, force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.integer  "bounty"
+    t.integer  "duration",    default: 3
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "featured_questions", ["user_id", "question_id"], name: "index_featured_questions_on_user_id_and_question_id"
 
   create_table "questions", force: :cascade do |t|
     t.string   "title"

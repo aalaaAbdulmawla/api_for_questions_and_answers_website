@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   has_many :favorites, through: :favorite_questions, source: :question
   has_many :edit_suggestions, dependent: :destroy
 
+  has_many :featured_questions, dependent: :destroy
+  has_many :featureds, through: :featured_questions, source: :question
+
   ##validations
   validates :first_name, :last_name, length: { maximum: 30}
   validates :location, :job, length: { maximum: 65}

@@ -5,6 +5,10 @@ class Question < ActiveRecord::Base
 	has_and_belongs_to_many :tags
 	has_many :favorite_questions, dependent: :destroy
   has_many :favorited_by, through: :favorite_questions, source: :user
+
+  has_many :featured_questions, dependent: :destroy
+  has_many :featured_by, through: :featured_questions, source: :user
+
   has_many :comments, as: :commentable, dependent: :destroy
 	has_many :votes, as: :votable, dependent: :destroy
 	has_many :edit_suggestions, dependent: :destroy
