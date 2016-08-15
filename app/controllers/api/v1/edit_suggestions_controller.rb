@@ -43,8 +43,9 @@ class Api::V1::EditSuggestionsController < ApplicationController
 
 	def check_experience
   	unless current_user.experience >= 15
-  	render json: { body:  "You can't suggest edits unless your experience is above 15 } for this." }, 
-  						status: 422
+	  	render json: { body:  "You can't suggest edits unless your experience is above 15 } for this." }, 
+	  						status: 422
+  	end
   end
 
   def award_experience

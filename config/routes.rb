@@ -1,64 +1,84 @@
 require 'api_constraints'
+
 Rails.application.routes.draw do
   devise_for :users
   namespace :api, defaults: { format: :json } do
       scope module: :v1 do
+
       	resources :users, only: [:show, :create, :update, :destroy, :index] do
       		resources :questions, :only => [:create, :update, :destroy]
-          get :questions, on: :member
-          get :answers, on: :member
-          get :comments, on: :member
-          get :favorites, on: :member
-          get :newest_questions, on: :member
-          get :newest_answers, on: :member
-          get :newest_votes, on: :member
-          get :tags, on: :member
+          member do
+            get :questions
+            get :answers
+            get :comments
+            get :favorites
+            get :newest_questions
+            get :newest_answers
+            get :newest_votes
+            get :tags
+          end      
       	end
-      	resources :sessions, :only => [:create, :destroy]
+
       	resources :questions, :only => [:index, :show] do
-      		put :favorite, on: :member
           resources :featured_questions, :only => [:create]
-      		delete :unfavorite, on: :member
-      		resources :answers, :only => [:create]
-      		resources :comments, :only => [:create]
-          put  :vote_up, on: :member, controller: :votes, question_id: true
-          put  :vote_down, on: :member, controller: :votes, question_id: true
-          put  :remove_vote, on: :member, controller: :votes, question_id: true
+          resources :answers, :only => [:create]
+          resources :comments, :only => [:create]
           resources :edit_suggestions, only: [:create]
           resources :tags, only: [:create, :destroy]
-          get :question_tags, on: :member, controller: :tags
-          get :no_answers, on: :collection
-          get :no_answers_votes, on: :collection
-          get :newest_no_answers, on: :collection
-          get :votes, on: :member
-          get :newest_questions, on: :collection
-          get :under_tag, on: :collection
-          get :unanswered, on: :collection
-          get :newest_unanswered, on: :collection
-          get :unanswered_votes, on: :collection
-          get :active, on: :collection
-          # delete :destroy, controller: :tags, param: :name
+          member do
+            put :favorite
+            delete :unfavorite
+            put  :vote_up, controller: :votes, question_id: true
+            put  :vote_down, controller: :votes, question_id: true
+            put  :remove_vote, controller: :votes, question_id: true
+            get :votes
+            get :question_tags,  controller: :tags
+          end
+          collection do
+            get :no_answers
+            get :no_answers_votes
+            get :newest_no_answers     
+            get :newest_questions
+            get :under_tag
+            get :unanswered
+            get :newest_unanswered
+            get :unanswered_votes
+            get :active
+          end
       	end
 
       	resources :answers, :only => [:show, :update] do
       		resources :comments, :only => [:create]
-          put  :vote_up, on: :member, controller: :votes, answer_id: true
-          put  :vote_down, on: :member, controller: :votes, answer_id: true
-          put  :remove_vote, on: :member, controller: :votes, answer_id: true
-          put :verify_answer, on: :member
+          member do    
+            put  :vote_up, controller: :votes, answer_id: true
+            put  :vote_down, controller: :votes, answer_id: true
+            put  :remove_vote, controller: :votes, answer_id: true
+            put :verify_answer
+          end
       	end
 
       	resources :comments, :only => [:show] do
-          put :vote_up, on: :member, controller: :votes, comment_id: true
-          put :vote_down, on: :member, controller: :votes, comment_id: true
-          put :remove_vote, on: :member, controller: :votes, comment_id: true
+          member do
+            put :vote_up, controller: :votes, comment_id: true
+            put :vote_down, controller: :votes, comment_id: true
+            put :remove_vote, controller: :votes, comment_id: true
+          end       
         end
-        resources :votes, :only => [:show]
-        resources :featured_questions, only: :show
+
         resources :edit_suggestions, :only => [:show, :index] do
           put :approve_edit, on: :member
         end
-        resources :tags, :only => [:index]
+
+        resources :votes, :only => [:show]
+        resources :featured_questions, only: :show      
+        resources :tags, :only => [:index] do
+          collection do
+            get :newest
+            get :search
+          end
+        end
+        resources :sessions, :only => [:create, :destroy]
+        mount Resque::Server.new, at: "/resque"
 
       end 
   end

@@ -6,14 +6,20 @@ class Api::V1::FeaturedQuestionsController < ApplicationController
 	def create
 		featured_question = FeaturedQuestion.new(featured_question_params)
 		if featured_question.save
-			render json: featured_question, status: 201, location: [:api, featured_question]
+			Resque.enqueue_at(featured_question.duration.days.from_now, FeaturedBounty, 
+				current_user.id, featured_question.question_id)
+			current_user.update(experience: current_user.experience - featured_question.bounty)
+			render json: { body: {
+												user_id: current_user.id, question_id: featured_question.question_id, 
+												duration: featured_question.duration, bounty: featured_question.bounty}
+											}, status: 201
 	  else
 	    render json: { errors: featured_question.errors }, status: 422
 	  end
 	end
 
 	def show
-		respond_with FeaturedQuestion.find(params[:id])
+	
 	end
 
 
@@ -25,7 +31,10 @@ class Api::V1::FeaturedQuestionsController < ApplicationController
   end
 
   def check_bounty
-  	current_user.experience >= params[:bounty]
+  	if current_user.experience <= params[:featured_question][:bounty]
+  		render json: { errors: "Bounty must be less than or equal to your experience." }, status: 422
+  		return false
+  	end
   end
 
 end

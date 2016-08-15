@@ -5,5 +5,5 @@ class FeaturedQuestion < ActiveRecord::Base
 
   ##Validations
   validates :user_id, :question_id, :bounty, presence: true
-  validates :duration, :numericality => { :greater_than => 1, :less_than_or_equal_to => 7 }
+  validates :duration, :numericality => { :greater_than => 0, :less_than_or_equal_to => 7 }
 end

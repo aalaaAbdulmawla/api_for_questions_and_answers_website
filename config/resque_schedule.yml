@@ -1,0 +1,7 @@
+award_bounty:
+  class: FeaturedBounty
+  queue: award_bounty
+  args: 
+    - user_id
+    - question_id
+  description: Runs the perform method in FeaturedBounty

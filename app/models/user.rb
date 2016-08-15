@@ -43,11 +43,7 @@ class User < ActiveRecord::Base
   end    
 
   def self.tags(user)
-    ans = []
-    user.questions.each do |question|
-      question.tags.each {|tag| ans << tag}
-    end
-    return ans
+   user.questions.flat_map {|q| q.tags}
   end
 
   private
@@ -56,9 +52,6 @@ class User < ActiveRecord::Base
     now.year - birth_date.year - (birth_date.to_date.change(:year => now.year) > now ? 1 : 0)
   end
 
-  # def birth_date_exsists?
-  #   birth_date.present?
-  # end
 end
 
 

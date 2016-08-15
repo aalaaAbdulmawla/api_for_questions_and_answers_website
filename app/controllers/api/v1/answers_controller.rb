@@ -32,15 +32,17 @@ class Api::V1::AnswersController < ApplicationController
       user = User.find(question.user_id)
       user.update(experience: user.experience + 2)
     end
-    question.answers.where(:accepted_flag => true).each do |ans|
-      ans.update(accepted_flag: false)
-      user = User.find(ans.user_id)
-      user.update(experience: user.experience - 10)
+    if question.answers.where(accepted_flag: true).size > 0 
+      question.answers.where(:accepted_flag => true).each do |ans|
+        ans.update(accepted_flag: false)
+        user = User.find(ans.user_id)
+        user.update(experience: user.experience - 10)
+      end
     end
     if answer.accepted_flag == true
       render json: { body: "You verified this answer before." }, status: 422
     elsif answer.update(accepted_flag: true)
-      user = User.find(ans.user_id)
+      user = User.find(answer.user_id)
       user.update(experience: user.experience + 10)    
       render json: answer, status: 200, location: [:api, answer]
     else

@@ -73,7 +73,7 @@ class Api::V1::QuestionsController < ApplicationController
 
   def under_tag
     tag = params[:name]
-    respond_with(Question.under_tag(tag).page(params[:page]).per(6))
+    respond_with(Question.under_tag(tag))
   end
 
   def unanswered

@@ -18,11 +18,20 @@ class Api::V1::TagsController < ApplicationController
 		respond_with Tag.all
 	end
 
+	def search
+		name = params[:name]
+		respond_with Tag.search(name)
+	end
+
 	def destroy
 		question = Question.find(params[:question_id])
 		tag = question.tags.find params[:id]
 		question.tags.destroy(tag)
 		head 404
+	end
+
+	def newest
+		respond_with Tag.newest
 	end
 
 

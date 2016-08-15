@@ -17,22 +17,13 @@ class Question < ActiveRecord::Base
 	validates :body, :title, :user_id, presence: true
 	validates :body, length: { maximum: 2000 }
 
+	##Scopes
 	def self.no_answers
-		result = []
-		Question.all.each do |question|
-			if question.answers.count > 0
-				result << question
-			end
-		end
-		return result
+	 select { |question| question.answers.size == 0 }
 	end
 
 	def self.no_answers_votes
-		result = []
-		Question.no_answers.each do |question|
-			question.votes.each{ |vote| result << vote}
-		end
-		return result
+		Question.no_answers.flat_map {|q| q.votes}
 	end
 
 	def self.newest_no_answers
@@ -40,23 +31,11 @@ class Question < ActiveRecord::Base
 	end
 
 	def self.under_tag(tag)
-		ans = []
-		Question.all.each do |question|
-			if question.tags.where(name: tag).count > 0
-				ans << question
-			end
-		end
-		return ans
+		select { |question| question.tags.where(name: tag).count > 0 }
 	end
 
 	def self.unanswered
-		ans = []
-		Question.all.each do |question|
-			if question.answers.where(accepted_flag: true).count == 0
-				ans << question
-			end
-		end
-		return ans
+		select { |question| question.answers.where(accepted_flag: true).size == 0 }
 	end	
 
 	def self.newest_unanswered
@@ -64,11 +43,7 @@ class Question < ActiveRecord::Base
 	end
 
 	def self.unanswered_votes
-		result = []
-		Question.unanswered.each do |question|
-			question.votes.each{ |vote| result << vote}
-		end
-		return result
+		Question.unanswered.flat_map {|q| q.votes}
 	end
 
 	def self.active
@@ -82,15 +57,3 @@ class Question < ActiveRecord::Base
 	end
 
 end
-
-
-
-
-
-
-
-
-
-
-
-

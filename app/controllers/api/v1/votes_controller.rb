@@ -68,8 +68,9 @@ class Api::V1::VotesController < ApplicationController
 
   def check_experience
   	unless current_user.experience >= 15
-  	render json: { body:  "You can't vote unless your experience is above 15 } for this." }, 
+  		render json: { body:  "You can't vote unless your experience is above 15 } for this." }, 
   						status: 422
+  	end
   end
 
   def award_experience
