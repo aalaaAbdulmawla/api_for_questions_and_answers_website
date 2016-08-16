@@ -5,6 +5,16 @@ class Tag < ActiveRecord::Base
 	##Validations
 	validates :name, presence: true, uniqueness: true
 
+	##Scopes
+	scope :popular, -> {
+    select("tags.id, count(questions.id) AS questions_count").
+    joins(:questions).
+    group("tags.id").
+    order("questions_count DESC").
+    limit(5)
+  }
+
+  ##Class methods
 	def self.newest
 		Tag.order(created_at: :desc)
 	end
@@ -12,5 +22,6 @@ class Tag < ActiveRecord::Base
 	def self.search(name)
 		Tag.where("name LIKE ?", "%#{name}%")
 	end
+
 
 end

@@ -75,6 +75,7 @@ Rails.application.routes.draw do
           collection do
             get :newest
             get :search
+            get :popular
           end
         end
         resources :sessions, :only => [:create, :destroy]

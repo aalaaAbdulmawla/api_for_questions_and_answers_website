@@ -23,6 +23,10 @@ class Api::V1::TagsController < ApplicationController
 		respond_with Tag.search(name)
 	end
 
+	def popular
+		respond_with Tag.popular
+	end
+
 	def destroy
 		question = Question.find(params[:question_id])
 		tag = question.tags.find params[:id]
