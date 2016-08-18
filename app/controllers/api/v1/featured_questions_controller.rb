@@ -18,11 +18,6 @@ class Api::V1::FeaturedQuestionsController < ApplicationController
 	  end
 	end
 
-	def show
-	
-	end
-
-
 
 	private
 	def featured_question_params

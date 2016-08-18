@@ -65,6 +65,5 @@ gem 'devise'
 gem 'date_validator'
 gem 'kaminari'
 gem 'redis'
-
 gem 'resque', "~> 1.25.2", :require => "resque/server"
 gem 'resque-scheduler'

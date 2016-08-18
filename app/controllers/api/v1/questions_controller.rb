@@ -64,7 +64,7 @@ class Api::V1::QuestionsController < ApplicationController
   
   def votes
     question = Question.find(params[:id])
-    respond_with(question.votes.page(params[:page]).per(6))
+    respond_with(Vote.count_votes("Question", question))
   end
 
   def newest_questions
