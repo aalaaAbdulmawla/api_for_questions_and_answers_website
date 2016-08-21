@@ -68,3 +68,6 @@ gem 'redis'
 gem 'resque', "~> 1.25.2", :require => "resque/server"
 gem 'resque-scheduler'
 gem 'apipie-rails'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+gem 'rails-observers', git: 'https://github.com/rails/rails-observers.git'

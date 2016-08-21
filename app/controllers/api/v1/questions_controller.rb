@@ -1,10 +1,13 @@
 class Api::V1::QuestionsController < ApplicationController
 	before_action :authenticate_with_token!, only: [:create, :update, :favorite, :unfavorite]
+  
+  caches_page :index, :show
+  cache_sweeper :question_sweeper
 	respond_to :json
 
   api! "Lists all questions."
 	def index
-		respond_with Question.all
+		respond_with Question.all.page(params[:page]).per(6)
 	end
 
   api! "Shows the given question."
@@ -26,6 +29,7 @@ class Api::V1::QuestionsController < ApplicationController
   def update
     question = current_user.questions.find(params[:id])
     if question.update(question_params)
+
       render json: question, status: 200, location: [:api, question]
     else
       render json: { errors: question.errors }, status: 422
