@@ -35,4 +35,21 @@ describe Vote do
       it { should be_valid}
     end
   end
+
+  describe "count votes" do
+    before { @comment = FactoryGirl.create :comment }
+    subject { @comment }
+
+    it 'should have negative votes count' do
+      10.times {FactoryGirl.create :vote, votable_id: @comment.id, votable_type: "Comment", user_id: 1}
+      expect(Vote.count_votes("Comment", @comment)).to eq(-10)
+    end
+
+    it 'should have positive votes count' do
+      5.times {FactoryGirl.create :vote, votable_id: @comment.id, votable_type: "Comment", user_id: 1, up_flag: true}
+      expect(Vote.count_votes("Comment", @comment)).to eq(5)
+    end
+
+  end
+
 end

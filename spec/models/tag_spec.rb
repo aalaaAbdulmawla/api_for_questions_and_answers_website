@@ -12,13 +12,10 @@ describe Tag do
   	it { should_not be_valid}
   end
 
-  describe "when name is dublicated" do
-  	before { 
-  		@tag.save!
-  		@second_tag = FactoryGirl.build(:tag)
-  	}
-  	subject { @second_tag }
-  	it { should_not be_valid }
+
+  describe "newest tag" do
+    before { @tag.name = "newest tag"; @tag.save! }
+    it { expect(Tag.newest.first).to eq(@tag) }
   end
 
 end

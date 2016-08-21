@@ -22,6 +22,7 @@ class Question < ActiveRecord::Base
 	 select { |question| question.answers.size == 0 }
 	end
 
+	#To be done
 	def self.no_answers_votes
 		Question.no_answers.flat_map {|q| q.votes}
 	end

@@ -34,4 +34,52 @@ describe Question do
     it { should_not be_valid }
   end
 
+
+  describe 'no answers' do
+    before{ @question.save!}
+    it { expect(Question.no_answers.size).to eq(1) }
+  end
+
+  describe 'unanswered' do
+    before{ @question.save!}
+    it { expect(Question.unanswered.size).to eq(1) }
+  end
+
+  describe 'newest no answers' do
+    before{ @question.save!}
+    it { expect(Question.newest_no_answers.size).to eq(1) }
+  end
+
+  describe "under tag" do
+    before{@question.tags << FactoryGirl.create(:tag, name: "test tag"); @question.save }
+    subject { @question }
+    it { expect(Question.under_tag("test tag").first).to eql(@question) }
+  end
+
+  describe "active" do
+    before{@question.save }
+    subject { @question }
+    it { expect(Question.active.first).to eql(@question) }
+  end
+
+
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
