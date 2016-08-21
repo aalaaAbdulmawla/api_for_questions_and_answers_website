@@ -4,6 +4,7 @@ class Api::V1::EditSuggestionsController < ApplicationController
 	after_action :award_experience, only: [:approve_edit]
 	respond_to :json
 
+	api! "Creates a new edit suggestion [auth required]"
 	def create
 		question = Question.find(params[:question_id])
 		edit_suggestion = current_user.edit_suggestions.build(edit_suggestion_params)
@@ -14,10 +15,12 @@ class Api::V1::EditSuggestionsController < ApplicationController
 	  end
 	end
 
+	api! "Shows a list of the current_user 's edit suggestion [auth required]."
 	def index
 		respond_with EditSuggestion.current_user_edit_suggestions(current_user)
 	end
 
+	api! "Approves an edit suggestion [auth required]."
 	def approve_edit
 		edit = EditSuggestion.find(params[:id])
 		question = Question.find(edit.question_id)
@@ -29,9 +32,9 @@ class Api::V1::EditSuggestionsController < ApplicationController
     end
 	end
 
-
+	api! "Shows the given current_user 's edit suggestion[authe required]"
 	def show
-		respond_with EditSuggestion.find(params[:id])
+		respond_with current_user.edit_suggestions.find(params[:id])
 	end
 
 	private

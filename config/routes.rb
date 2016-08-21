@@ -1,12 +1,13 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
+  apipie
   devise_for :users
+
   namespace :api, defaults: { format: :json } do
       scope module: :v1 do
-
+        resources :questions, :only => [:create, :update, :destroy]
       	resources :users, only: [:show, :create, :update, :destroy, :index] do
-      		resources :questions, :only => [:create, :update, :destroy]
           member do
             get :questions
             get :answers
@@ -14,9 +15,12 @@ Rails.application.routes.draw do
             get :favorites
             get :newest_questions
             get :newest_answers
-            get :newest_votes
             get :tags
-          end      
+          end 
+
+          collection do
+            get :newest_votes
+          end     
       	end
 
       	resources :questions, :only => [:index, :show] do

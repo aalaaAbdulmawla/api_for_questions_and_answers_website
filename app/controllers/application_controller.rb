@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
  # before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  include Authenticable
+  #include Authenticable
   
   def configure_permitted_parameters
   	devise_parameter_sanitizer.permit(:sign_up, :account_update) do |user_params|
@@ -12,4 +12,20 @@ class ApplicationController < ActionController::Base
     										 :password_confirmation, :birth_date, :location, :job, :about)
   	end
   end
+
+  protected
+  
+  def current_user
+    @current_user ||= User.find_by(auth_token: request.headers['Authorization'])
+  end
+
+  def authenticate_with_token!
+    render json: { errors: "Not authenticated" },
+                status: :unauthorized unless user_signed_in?
+  end
+
+  def user_signed_in?
+    current_user.present?
+  end
+
 end

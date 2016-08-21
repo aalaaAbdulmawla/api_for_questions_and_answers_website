@@ -3,6 +3,7 @@ class Api::V1::FeaturedQuestionsController < ApplicationController
 	before_action :check_bounty
 	respond_to :json
 
+	api! "Creates a new featured question [auth required]."
 	def create
 		featured_question = FeaturedQuestion.new(featured_question_params)
 		if featured_question.save

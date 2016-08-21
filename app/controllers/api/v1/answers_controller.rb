@@ -2,16 +2,17 @@ class Api::V1::AnswersController < ApplicationController
 	before_action :authenticate_with_token!, only: [:create, :update, :verify_answer]
   respond_to :json
 
+  api! "Creates a new answer [auth required]."
 	def create
 		answer = (Question.find(params[:question_id])).answers.build(answer_params)
 		if answer.save
-			#current_user.answers << answer
       render json: answer, status: 201, location: [:api, answer]
     else
       render json: { errors: answer.errors }, status: 422
     end
 	end
 
+  api! "Updates the given answer [auth required]."
 	def update
     answer = current_user.answers.find(params[:id])
     if answer.update(answer_params)
@@ -21,10 +22,12 @@ class Api::V1::AnswersController < ApplicationController
     end
   end
 
+  api! "Shows the given answer."
 	def show
 		respond_with Answer.find(params[:id])
 	end
 
+  api! "Marks the given answer as accepted [auth required]"
   def verify_answer
     answer = Answer.find(params[:id])
     question = current_user.questions.find(answer.question_id)

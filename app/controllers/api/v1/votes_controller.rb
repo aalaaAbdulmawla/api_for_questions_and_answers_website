@@ -7,16 +7,18 @@ class Api::V1::VotesController < ApplicationController
 
 	respond_to :json
 
-
+	api! "Up votes the given resource [auth required]."
 	def vote_up
 		object = parent.votes.build({user_id: current_user.id, up_flag: true})
 		view_vote(object)
 	end
 
+	api! "Down votes the given resource [auth required]"
 	def vote_down
 		object = parent.votes.build({user_id: current_user.id, up_flag: false})
 		view_vote(object)
 	end
+
 
 	def view_vote(object)
 		if object.save
@@ -26,6 +28,7 @@ class Api::V1::VotesController < ApplicationController
 	  end
 	end
 
+	api! "Removes the given votes [auth required]"
 	def remove_vote
 		vote = parent.votes.find_by_user_id(current_user.id)
 		if ! vote.nil?
@@ -37,6 +40,7 @@ class Api::V1::VotesController < ApplicationController
 			render json: { body: "You didn't vote for this before." }, status: 422
 		end
 	end
+
 
 	def show
 		respond_with Vote.find(params[:id])

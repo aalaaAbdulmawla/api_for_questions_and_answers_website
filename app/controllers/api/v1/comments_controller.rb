@@ -2,6 +2,7 @@ class Api::V1::CommentsController < ApplicationController
 	before_action :authenticate_with_token!, only: [:create]
 	respond_to :json
 
+  api! "Creates a new comment [auth required]."
 	def create
     comment = parent.comments.build(comment_params)
 		if comment.save
@@ -11,6 +12,7 @@ class Api::V1::CommentsController < ApplicationController
 	  end
 	end
 
+  api! "Shows the given comment."
 	def show
 		respond_with Comment.find(params[:id])
 	end
