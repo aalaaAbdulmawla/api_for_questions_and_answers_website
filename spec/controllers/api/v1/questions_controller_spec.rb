@@ -67,6 +67,7 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
 
       it { should respond_with 422 }
     end
+  end
 
   describe "PUT/PATCH #update" do
     before(:each) do
@@ -119,33 +120,29 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
 
     it { should respond_with 204 }
   end
-end
 
+  describe "PATCH #favorite" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      @question = FactoryGirl.create :question, user: @user
+      api_authorization_header @user.auth_token
+      patch :favorite, { user_id: @user.id, id: @question.id }
+    end
 
+    it { should respond_with 200 }
+  end
 
+  describe "DELETE #unvaforite" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      @question = FactoryGirl.create :question, user: @user
+      api_authorization_header @user.auth_token
+      patch :favorite, { user_id: @user.id, id: @question.id }
+      delete :unfavorite, { user_id: @user.id, id: @question.id }
+    end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    it { should respond_with 204 }
+  end
 
 end
 

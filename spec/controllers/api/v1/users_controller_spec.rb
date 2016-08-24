@@ -105,8 +105,73 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 	  end
 
 	  it { should respond_with 204 }
-
 	end
+
+  describe "GET #questions" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      @questions = 5.times { FactoryGirl.create :question, user_id: @user.id }
+      get :questions, id: @user.id, format: :json
+    end
+
+    it "returns 5 records from the database" do
+      questions_response = json_response
+      expect(questions_response.size).to eql 5
+    end
+
+    it { should respond_with 200 }
+  end
+
+  describe "GET #answers" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      @question = FactoryGirl.create :question, user_id: @user.id
+      @questions = 5.times { FactoryGirl.create :answer, question_id: @question.id, user_id: @user.id }
+      get :answers, id: @user.id, format: :json
+    end
+
+    it "returns 5 records from the database" do
+      questions_response = json_response
+      expect(questions_response.size).to eql 5
+    end
+
+    it { should respond_with 200 }
+  end
+
+  describe "GET #comments" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      @question = FactoryGirl.create :question, user_id: @user.id
+      @questions = 5.times { FactoryGirl.create :comment, commentable_id: @question.id, 
+        user_id: @user.id, commentable_type: "Question" }
+      get :comments, id: @user.id, format: :json
+    end
+
+    it "returns 5 records from the database" do
+      questions_response = json_response
+      expect(questions_response.size).to eql 5
+    end
+
+    it { should respond_with 200 }
+  end
+
+  describe "GET #favorites" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      @question = FactoryGirl.create :question, user_id: @user.id
+      @favorite_question = FactoryGirl.create :favorite_question, user_id: @user.id, 
+      question_id: @question.id
+      get :favorites, id: @user.id, format: :json
+    end
+
+    it "returns 1 records from the database" do
+      questions_response = json_response
+      expect(questions_response.size).to eql 1
+    end
+
+    it { should respond_with 200 }
+  end
+
 end
 
 

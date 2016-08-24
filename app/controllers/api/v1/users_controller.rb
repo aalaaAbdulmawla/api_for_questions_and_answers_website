@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authenticate_with_token!, only: [:update, :destroy, :my_tags]
-  caches_page :index, :show
-  cache_sweeper :user_sweeper
+  # caches_page :index, :show
+  # cache_sweeper :user_sweeper
 
 	respond_to :json
 

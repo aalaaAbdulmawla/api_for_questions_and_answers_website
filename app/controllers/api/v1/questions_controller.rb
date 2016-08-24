@@ -1,8 +1,8 @@
 class Api::V1::QuestionsController < ApplicationController
 	before_action :authenticate_with_token!, only: [:create, :update, :favorite, :unfavorite]
   
-  caches_page :index, :show
-  cache_sweeper :question_sweeper
+  # caches_page :index, :show
+  # cache_sweeper :question_sweeper
 	respond_to :json
 
   api! "Lists all questions."
