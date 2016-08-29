@@ -13,4 +13,4 @@ Restful API a stackover flow like website where users can:
 
 * Ruby version = ruby 2.3.0
 
-* Rails verstion = 4.2.6
+* Rails version = 4.2.6
