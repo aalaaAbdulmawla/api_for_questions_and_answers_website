@@ -1,4 +1,4 @@
-Restful API a stackover flow like website where users can:
+Restful API for a stackover flow like website where users can:
 
 * Ask or answer a question
 
