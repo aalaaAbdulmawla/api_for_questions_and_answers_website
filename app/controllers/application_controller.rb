@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
  # before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  # include ActionController::Caching::Pages
-  # self.page_cache_directory = "#{Rails.root.to_s}/public/page_cache"
+  include ActionController::Caching::Pages
+  self.page_cache_directory = "#{Rails.root.to_s}/public/page_cache"
   
   def configure_permitted_parameters
   	devise_parameter_sanitizer.permit(:sign_up, :account_update) do |user_params|
