@@ -1,28 +1,10 @@
-== README
+Restful API a stackover flow like website where users can:
+1 - Ask or answer a question.
+2 - Vote for question or answer.
+3 - Mark an answer as accepted.
+4 - Comment on questions or answers.
+5 - Add edit suggestions.
+6 - Add bouns points for answering a question.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Ruby version = ruby 2.3.0p
+Rails verstion = 4.2.6
