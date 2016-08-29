@@ -1,4 +1,4 @@
-Restful API for a stackover flow like website where users can:
+Restful API for a Stack Overflow like website where users can:
 
 * Ask or answer a question
 
@@ -11,6 +11,6 @@ Restful API for a stackover flow like website where users can:
 * Add bouns points for answering a question
 
 
-* Ruby version = ruby 2.3.0
+Ruby version = ruby 2.3.0
 
-* Rails version = 4.2.6
+Rails version = 4.2.6
